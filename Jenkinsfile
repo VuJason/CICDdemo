@@ -48,7 +48,7 @@ pipeline {
     post {
         always {
             // Thu thập báo cáo kiểm tra JUnit
-            junit '**/path/to/test/reports/*.xml'
+            junit '**/test-results/*.xml'
         }
         success {
             echo 'Build và kiểm tra thành công!'
