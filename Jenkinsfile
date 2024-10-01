@@ -41,13 +41,7 @@ pipeline {
             }
         }
 
-        stage('Archive') {
-            steps {
-                // Lưu lại artifact (file JAR) tạo ra từ quá trình build
-                archiveArtifacts artifacts: '**/dist/*.jar', allowEmptyArchive: false
-            }
-        }
-    }
+       
 
     post {
         always {
