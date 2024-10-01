@@ -2,7 +2,7 @@ pipeline {
     agent any  // Sử dụng bất kỳ agent nào của Jenkins để chạy pipeline này
     
     tools {
-        ant 'Ant_1.10'  // Chỉ định phiên bản Ant (cấu hình trong Jenkins)
+        ant 'Ant Installation'  // Chỉ định phiên bản Ant (cấu hình trong Jenkins)
         jdk 'JDK18'  // Sử dụng JDK phiên bản 18
     }
 
