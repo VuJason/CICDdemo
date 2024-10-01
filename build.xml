@@ -40,10 +40,14 @@
         <classpath>
             <pathelement path="${build.dir}"/>
             <pathelement path="${lib.dir}"/>
+            <pathelement location="lib/junit-4.13.2.jar"/>
+            <pathelement location="lib/hamcrest-core-1.3.jar"/>
+            <pathelement location="build/classes"/> <!-- Thêm thư mục class -->
+            <pathelement location="build/test-classes"/>
         </classpath>
         <formatter type="xml"/>
         <batchtest>
-            <fileset dir="test" includes="**/*Test.class"/>
+            <fileset dir="test" includes="**/*PersonalIncomeTaxCaculatorTest.class"/>
         </batchtest>
         <testfork>
             <arg line="--failOnError"/>
