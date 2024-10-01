@@ -1,58 +1,57 @@
 pipeline {
-    agent any  // Sử dụng bất kỳ agent nào có sẵn
-
+    agent any  // Sử dụng bất kỳ agent nào của Jenkins để chạy pipeline này
+    
     tools {
-        ant 'Ant_1.10'  // Đảm bảo phiên bản Ant đã được cài đặt trong Jenkins
-    }
-
-    environment {
-        // Định nghĩa các biến môi trường nếu cần
-        BUILD_DIR = 'build'
-        DIST_DIR = 'dist'
+        ant 'Ant_1.10'  // Chỉ định phiên bản Ant (cấu hình trong Jenkins)
+        jdk 'JDK18'  // Sử dụng JDK phiên bản 18
     }
 
     stages {
-        // Giai đoạn 1: Kiểm tra mã nguồn từ Git
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/your-repo.git', branch: 'main'
+                // Lấy mã nguồn từ Git repository
+                git url: 'https://github.com/VuJason/CICDdemo.git', branch: 'master'
             }
         }
 
-        // Giai đoạn 2: Biên dịch mã nguồn bằng Ant
         stage('Build') {
             steps {
                 script {
-                    // Sử dụng target "jar" trong build.xml để build và đóng gói file JAR
-                    ant 'clean jar'
+                    // Biên dịch mã nguồn bằng Ant
+                    ant 'clean compile'
                 }
             }
         }
 
-        // Giai đoạn 3: Chạy các bài kiểm tra
         stage('Test') {
             steps {
                 script {
-                    // Sử dụng target "test" trong build.xml để chạy JUnit test
+                    // Chạy các unit tests bằng JUnit
                     ant 'test'
                 }
             }
         }
 
-        // Giai đoạn 4: Đóng gói (Deploy nếu cần)
         stage('Package') {
             steps {
                 script {
-                    // Tạo artifact từ build, ví dụ JAR file
-                    archiveArtifacts artifacts: 'dist/*.jar', allowEmptyArchive: false
+                    // Tạo gói JAR sau khi build thành công
+                    ant 'jar'
                 }
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                // Lưu lại artifact (file JAR) tạo ra từ quá trình build
+                archiveArtifacts artifacts: '**/dist/*.jar', allowEmptyArchive: false
             }
         }
     }
 
     post {
         always {
-            // Thu thập báo cáo kiểm tra JUnit sau khi chạy xong
+            // Thu thập báo cáo kiểm tra JUnit
             junit '**/build/test-reports/*.xml'
         }
         success {
