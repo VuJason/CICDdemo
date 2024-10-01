@@ -27,6 +27,7 @@ pipeline {
             steps {
                 script {
                     // Chạy các unit tests bằng JUnit
+                    echo "Running test..."
                     ant 'test'
                 }
             }
@@ -47,7 +48,7 @@ pipeline {
     post {
         always {
             // Thu thập báo cáo kiểm tra JUnit
-            junit '**/build/test-reports/*.xml'
+            junit '**/path/to/test/reports/*.xml'
         }
         success {
             echo 'Build và kiểm tra thành công!'
