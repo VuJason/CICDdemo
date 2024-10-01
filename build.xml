@@ -35,20 +35,21 @@
     </target>
 
     <target name="test" depends="compile">
-       <junit printsummary="yes" haltonfailure="yes">
-          <classpath>
-            <path location="${build.classes.dir}"/>
-            <path location="${build.test.classes.dir}"/>
+    <mkdir dir="${build.dir}/test-reports"/>
+    <junit printsummary="on" haltonfailure="yes">
+        <classpath>
+            <path location="${build.dir}"/>
             <fileset dir="${lib.dir}" includes="**/*.jar"/>
-          </classpath>
-          <batchtest fork="yes" todir="${build.test.reports.dir}">
-            <fileset dir="${src.test.dir}">
-                <include name="**/*PersonalIncomeTaxCaculatorTest.java"/>
+        </classpath>
+        <batchtest fork="yes" todir="${build.dir}/test-reports">
+            <fileset dir="${src.dir}">
+                <include name="**/*Test.java"/>
             </fileset>
-          </batchtest>
-          <formatter type="xml"/>
-       </junit>
-    </target>
+        </batchtest>
+        <formatter type="xml"/>
+        <formatter type="plain"/>
+    </junit>
+</target>
 
     <!--
 
